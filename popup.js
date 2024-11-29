@@ -1,14 +1,3 @@
-async function checkForReact() {
-    const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-    if (!tab?.id) return false;
-  
-    const [result] = await chrome.scripting.executeScript({
-      target: { tabId: tab.id },
-      func: () => !!(window.__REACT_DEVTOOLS_GLOBAL_HOOK__)
-    });
-  
-    return result.result;
-  }
   
   // Initialize popup
   document.addEventListener('DOMContentLoaded', async () => {
@@ -19,27 +8,20 @@ async function checkForReact() {
     const { reactScanEnabled } = await chrome.storage.local.get(['reactScanEnabled']);
     toggle.checked = reactScanEnabled ?? true;
   
-    // Check for React
-    try {
-      const hasReact = await checkForReact();
-      statusText.textContent = hasReact 
-        ? 'React detected! Ready to scan.' 
-        : 'No React detected on this page.';
-      toggle.disabled = !hasReact;
-    } catch (err) {
-      statusText.textContent = 'Unable to check React status.';
-      toggle.disabled = true;
-    }
-  
     // Handle toggle changes
-    toggle.addEventListener('change', () => {
+    toggle.addEventListener('change', async () => {
       const enabled = toggle.checked;
-      chrome.storage.local.set({ reactScanEnabled: enabled });
+      await chrome.storage.local.set({ reactScanEnabled: enabled });
       
-      // Notify background script
+      // Notify background script and reload the page
       chrome.runtime.sendMessage({ 
         action: 'toggleReactScan', 
         enabled: enabled 
+      }, async () => {
+        const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+        if (tab?.id) {
+          chrome.tabs.reload(tab.id);
+        }
       });
     });
   });
