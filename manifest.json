@@ -1,0 +1,39 @@
+{
+  "manifest_version": 3,
+  "name": "React Scan Inspector",
+  "version": "1.0",
+  "description": "Automatically detect and analyze performance issues in any React application",
+  "permissions": [
+    "scripting",
+    "storage",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/logo-16x16.png",
+      "32": "icons/logo-32x32.png",
+      "96": "icons/logo-96x96.png"
+    }
+  },
+  "icons": {
+    "16": "icons/logo-16x16.png",
+    "32": "icons/logo-32x32.png",
+    "96": "icons/logo-96x96.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_start",
+      "all_frames": true
+    }
+  ]
+}
