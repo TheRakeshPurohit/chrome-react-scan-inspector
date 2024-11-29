@@ -1,12 +1,14 @@
 # React Scan Inspector
 
+![Demo](https://github.com/user-attachments/assets/0ca7c272-0407-4413-921f-56e6fcb4b6a0)
+
 ## Installation from Source
 
 1. Download or clone this repository
 2. Open Chrome and navigate to `chrome://extensions/`
 3. Enable "Developer mode" in the top right
 4. Click "Load unpacked" and select the extension directory
-5. Click the extension icon in your toolbar to start scanning!
+5. Click the extension icon in your toolbar to start scanning
 
 ## How It Works
 
@@ -20,12 +22,7 @@ React Scan Inspector automatically detects React applications and monitors their
 ## Usage
 
 1. Click the extension icon in your toolbar
-2. If React is detected on the current page, you'll see an indicator
-3. Toggle scanning on/off using the switch
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
+2. Toggle scanning on/off using the switch
 
 ## Credits
 
@@ -33,4 +30,4 @@ The logo, the idea, the scanner itself, and the initial implementation are all b
 
 ## License
 
-MIT License - feel free to use and modify for your own projects!
+MIT License
